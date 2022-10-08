@@ -18,9 +18,18 @@
     </div>
 
     <div id="group-withdraw">
+      <h4 id="withdraw-text"></h4>
       <button id="withdraw-button">Withdraw</button>
     </div>
 
-    <script src="./script.js" type="module"></script>
+    <div id="group-showBalance">
+      <div id="balance-amount-container">
+        <h4 id="balance-amount-loading">Loading Balance...</h4>
+        <h4 id="balance-amount"></h4>
+      </div>
+      <button id="refresh-balance">Refresh Balance</button>
+    </div>
+
+    <script src="./script.js" type="module" defer></script>
   </body>
 </html>
