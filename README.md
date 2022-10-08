@@ -28,9 +28,7 @@ The repo to the contract : [FundMe Smart Contract](https://github.com/arjunadhik
 git clone https://github.com/arjunadhikary/hardhat-funde-me.git
 ```
 
-## License
 
-This project is licensed under the [MIT] License - see the LICENSE.md file for details
 
 ## GIF
 
