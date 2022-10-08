@@ -72,13 +72,21 @@ async function connect() {
 
 async function withdraw() {
   try {
-    const { contract } = await connect();
+    const { contract, provider } = await connect();
+    const amount = await amountInWallet();
+
     const transactionResponse = await contract.optimizedwithdraw();
-    const recepit = await transactionResponse.wait(1);
-    console.log(recepit);
+    const result = await waitForTransactionToComplete(
+      provider,
+      transactionResponse
+    );
+    console.log(result);
     document.getElementById(
       'withdraw-text'
-    ).textContent = ` Amount ${await amountInWallet()} have been withdrawn hurray!!!! `;
+    ).textContent = ` Amount ${ethers.utils.formatEther(
+      amount
+    )} have been withdrawn hurray!!!! `;
+
     await getBalanceHelper();
   } catch (error) {
     console.log(error);
@@ -91,30 +99,29 @@ async function fund(amount) {
 
     const transactionResponse = await contract.fund({ value: amount });
 
-    const result = await waitForTransactionToComplete(
+    const recepit = await waitForTransactionToComplete(
       provider,
-      transactionResponse,
-      amount
+      transactionResponse
     );
-    window.alert(result);
+    window.alert(
+      `Transfered ${ethers.utils.formatEther(amount)} ethers from ${
+        recepit.from
+      } to ${recepit.to} sucessfully`
+    );
     await getBalanceHelper();
   } catch (error) {
     console.log(error);
   }
 }
 
-function waitForTransactionToComplete(provider, transactionResponse, amount) {
+function waitForTransactionToComplete(provider, transactionResponse) {
   console.log(`Waiting for response ${transactionResponse.hash} block`);
   return new Promise((resolve, reject) => {
     provider.once(transactionResponse.hash, (recepit) => {
       console.log(
         `Transaction completed with ${recepit.confirmations} confirmations`
       );
-      resolve(
-        `Transfered ${ethers.utils.formatEther(amount)} ethers from ${
-          recepit.from
-        } to ${recepit.to} sucessfully`
-      );
+      resolve(recepit);
     });
   });
 }
