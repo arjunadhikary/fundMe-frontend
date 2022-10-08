@@ -54,7 +54,6 @@ async function connect() {
     //connect to the wallet
     console.log('Wallet is installed');
     try {
-      //   await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
 
@@ -88,17 +87,34 @@ async function withdraw() {
 
 async function fund(amount) {
   try {
-    const { contract } = await connect();
+    const { contract, provider } = await connect();
 
     const transactionResponse = await contract.fund({ value: amount });
-    const { to, from } = await transactionResponse.wait(1);
-    window.alert(
-      `Transfered ${ethers.utils.formatEther(
-        amount
-      )} ethers from ${from} to ${to} sucessfully`
+
+    const result = await waitForTransactionToComplete(
+      provider,
+      transactionResponse,
+      amount
     );
+    window.alert(result);
     await getBalanceHelper();
   } catch (error) {
     console.log(error);
   }
+}
+
+function waitForTransactionToComplete(provider, transactionResponse, amount) {
+  console.log(`Waiting for response ${transactionResponse.hash} block`);
+  return new Promise((resolve, reject) => {
+    provider.once(transactionResponse.hash, (recepit) => {
+      console.log(
+        `Transaction completed with ${recepit.confirmations} confirmations`
+      );
+      resolve(
+        `Transfered ${ethers.utils.formatEther(amount)} ethers from ${
+          recepit.from
+        } to ${recepit.to} sucessfully`
+      );
+    });
+  });
 }
