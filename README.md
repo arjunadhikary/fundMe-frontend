@@ -20,9 +20,9 @@ The repo to the contract : [FundMe Smart Contract](https://github.com/arjunadhik
 
 ### Executing program
 
--Download the frontend and backend repo
--Frontend Repo can be run simply by opening the index.html file or using a Live Server
--Backend Instruction @[FundMe Smart Contract](https://github.com/arjunadhikary/hardhat-funde-me)
+- Download the frontend and backend repo
+- Frontend Repo can be run simply by opening the index.html file or using a Live Server
+- Backend Instruction @[FundMe Smart Contract](https://github.com/arjunadhikary/hardhat-funde-me)
 
 ```
 git clone https://github.com/arjunadhikary/hardhat-funde-me.git
