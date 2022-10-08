@@ -34,4 +34,4 @@ This project is licensed under the [MIT] License - see the LICENSE.md file for d
 
 ## GIF
 
-![](https://github.com/arjunadhikary/hardhat-funde-me/Animation.gif)
+![](https://github.com/arjunadhikary/fundMe-frontend/blob/master/readme/Animation.gif)
